@@ -86,7 +86,31 @@ void print_stage_header(int stage_num)
 void stage_one(int ids[], double coordinates[][DATA_DIM], int num_pois,
 			   double queries[][QUERY_BOUNDS], int num_queries)
 {
-	/* add code for stage 1 */
+	// Reading POI records: IDs and coordinates
+	for (int i = 0; i < num_pois; i++)
+	{
+		if (scanf("%d %lf %lf;", &ids[i], &coordinates[i][0], &coordinates[i][1]) != 3)
+		{
+			fprintf(stderr, "Error reading the POI data.\n");
+			exit(EXIT_FAILURE);
+		}
+		// Log the read POI for debugging purposes
+		fprintf(stderr, "Read POI #%d: ID=%d, x=%lf, y=%lf\n",
+				i, ids[i], coordinates[i][0], coordinates[i][1]);
+	}
+
+	// Reading the query ranges
+	for (int i = 0; i < num_queries; i++)
+	{
+		if (scanf("%lf %lf %lf %lf", &queries[i][0], &queries[i][1], &queries[i][2], &queries[i][3]) != 4)
+		{
+			fprintf(stderr, "Error reading the query data.\n");
+			exit(EXIT_FAILURE);
+		}
+		// Log the read query range for debugging purposes
+		fprintf(stderr, "Read query #%d: xlb=%lf, ylb=%lf, xub=%lf, yub=%lf\n",
+				i, queries[i][0], queries[i][1], queries[i][2], queries[i][3]);
+	}
 	/* print stage header */
 	print_stage_header(STAGE_NUM_ONE);
 }
