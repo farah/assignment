@@ -43,6 +43,11 @@ void stage_three(int ids[], double coordinates[][DATA_DIM], int curve_values[],
 void stage_four(int ids[], double coordinates[][DATA_DIM], int curve_values[],
 				int num_pois, double queries[][QUERY_BOUNDS], int num_queries);
 
+int is_within_bounds(double point_x, double point_y,
+                     double xlb, double ylb, double xub, double yub) {
+    return (point_x >= xlb && point_x <= xub) && (point_y >= ylb && point_y <= yub);
+}
+
 /* add your own function prototypes here */
 
 /****************************************************************/
