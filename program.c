@@ -44,8 +44,36 @@ void stage_four(int ids[], double coordinates[][DATA_DIM], int curve_values[],
 				int num_pois, double queries[][QUERY_BOUNDS], int num_queries);
 
 int is_within_bounds(double point_x, double point_y,
-                     double xlb, double ylb, double xub, double yub) {
-    return (point_x >= xlb && point_x <= xub) && (point_y >= ylb && point_y <= yub);
+					 double xlb, double ylb, double xub, double yub)
+{
+	return (point_x >= xlb && point_x <= xub) && (point_y >= ylb && point_y <= yub);
+}
+
+/* Function to print POIs within the first query */
+void print_pois_in_query(int ids[], double coordinates[][DATA_DIM],
+						 double query_bounds[QUERY_BOUNDS])
+{
+	int first_poi_printed = 0; // Flag to track the first printed POI
+
+	for (int i = 0; i < DATA_SET_SIZE; i++)
+	{
+		if (is_within_bounds(coordinates[i][0], coordinates[i][1],
+							 query_bounds[0], query_bounds[1],
+							 query_bounds[2], query_bounds[3]))
+		{
+			if (first_poi_printed)
+			{
+				printf(" "); // Print a space before each subsequent POI ID
+			}
+			printf("%d", ids[i]);
+			first_poi_printed = 1;
+		}
+	}
+
+	if (!first_poi_printed)
+	{
+		printf(" none"); // Print "none" if no POIs are within the query bounds
+	}
 }
 
 /* add your own function prototypes here */
@@ -118,6 +146,11 @@ void stage_one(int ids[], double coordinates[][DATA_DIM], int num_pois,
 	}
 	/* print stage header */
 	print_stage_header(STAGE_NUM_ONE);
+
+	/* Call function to process and print POIs in the first query */
+	printf("POIs in Q0:");
+	print_pois_in_query(ids, coordinates, queries[0]);
+	printf("\n"); // Move to a new line after printing all relevant POIs
 }
 
 /* stage 2: sort and query POIs by the x-coordinates */
